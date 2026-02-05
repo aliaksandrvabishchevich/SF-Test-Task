@@ -63,8 +63,8 @@ force-app/main/default/
 
 ## Static Resources
 
-| Resource | Path | Description |
-|----------|------|-------------|
+| Resource | Description |
+|----------|-------------|
 | **chartjs** | ChartJS library to display dashboards
 ---
 
