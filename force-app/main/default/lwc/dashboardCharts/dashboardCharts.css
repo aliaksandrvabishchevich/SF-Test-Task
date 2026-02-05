@@ -1,0 +1,19 @@
+.charts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1rem;
+}
+
+.chart-card {
+    min-height: 280px;
+}
+
+.chart-container {
+    position: relative;
+    height: 260px;
+    width: 100%;
+}
+
+.chart-container canvas {
+    max-height: 260px;
+}

@@ -1,0 +1,82 @@
+<template>
+    <lightning-card>
+        <template lwc:if={showSearchOrActions}>
+            <lightning-button slot="actions" variant="brand" label="New" onclick={handleNewRecord}></lightning-button>
+        </template>
+        <div class="slds-p-around_medium">
+            <template lwc:if={showSearchOrActions}>
+                <div class="slds-grid slds-gutters slds-m-bottom_medium slds-wrap">
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-4">
+                        <lightning-input
+                            name="search"
+                            label="Search"
+                            type="search"
+                            placeholder="Type to search..."
+                            value={searchTerm}
+                            onchange={handleSearchChange}
+                        ></lightning-input>
+                    </div>
+                </div>
+            </template>
+
+            <template lwc:if={errorMessage}>
+                <div class="slds-m-bottom_medium">
+                    <div class="slds-notify slds-notify_alert slds-alert_error" role="alert">
+                        <span class="slds-assistive-text">Error</span>
+                        <h2>{errorMessage}</h2>
+                    </div>
+                </div>
+            </template>
+
+            <template lwc:if={isLoading}>
+                <div class="slds-align_absolute-center slds-p-around_large">
+                    <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+                </div>
+            </template>
+
+            <template lwc:elseif={hasData}>
+                <div class="slds-box slds-theme_shade slds-p-around_small">
+                    <lightning-datatable
+                        key-field="Id"
+                        data={displayTableData}
+                        columns={displayColumns}
+                        sorted-by={sortedBy}
+                        sorted-direction={sortedDirection}
+                        hide-checkbox-column
+                        show-row-number-column={hideBuiltInRowNumbers}
+                        onsort={handleSort}
+                        onrowaction={handleRowAction}
+                    ></lightning-datatable>
+                </div>
+                <div class="slds-grid slds-grid_vertical-align-center slds-gutters_small slds-m-top_medium slds-wrap">
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-4">
+                        <div class="max-records-compact">
+                            <lightning-combobox
+                                name="pageSize"
+                                label="Per page"
+                                value={pageSizeValue}
+                                options={recordLimitOptions}
+                                onchange={handlePageSizeChange}
+                            ></lightning-combobox>
+                        </div>
+                    </div>
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_3-of-4 slds-text-align_right">
+                        <div class="slds-m-bottom_x-small slds-text-body_small slds-text-color_weak">{pageInfoText}</div>
+                        <lightning-button-group>
+                            <lightning-button label="First" onclick={handleFirstPage} disabled={prevDisabled}></lightning-button>
+                            <lightning-button label="Previous" onclick={handlePrevPage} disabled={prevDisabled}></lightning-button>
+                            <lightning-button label="Next" onclick={handleNextPage} disabled={nextDisabled}></lightning-button>
+                            <lightning-button label="Last" onclick={handleLastPage} disabled={nextDisabled}></lightning-button>
+                        </lightning-button-group>
+                    </div>
+                </div>
+            </template>
+
+            <template lwc:elseif={hasSearched}>
+                <div class="slds-text-color_weak slds-p-around_medium">
+                    No records found for this object.
+                </div>
+            </template>
+        </div>
+    </lightning-card>
+</template>

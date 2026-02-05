@@ -1,0 +1,69 @@
+<template>
+    <lightning-card>
+        <div class="slds-p-around_medium">
+            <template lwc:if={isLoading}>
+                <div class="slds-align_absolute-center slds-p-around_large">
+                    <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+                </div>
+            </template>
+            <template lwc:elseif={errorMessage}>
+                <div class="slds-notify slds-notify_alert slds-alert_error" role="alert">
+                    <span class="slds-assistive-text">Error</span>
+                    <h2>{errorMessage}</h2>
+                </div>
+            </template>
+            <template lwc:elseif={hasDashboards}>
+                <lightning-datatable
+                    key-field="id"
+                    data={dashboards}
+                    columns={tableColumns}
+                    hide-checkbox-column
+                    onrowaction={handleRowAction}
+                >
+                </lightning-datatable>
+            </template>
+            <template lwc:else>
+                <div class="slds-text-color_weak slds-p-around_medium">No dashboards available.</div>
+            </template>
+        </div>
+    </lightning-card>
+
+    <template lwc:if={showModal}>
+        <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open slds-modal_medium" aria-labelledby="modal-title" aria-modal="true">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <h2 id="modal-title" class="slds-modal__title slds-hyphenate">{modalTitle}</h2>
+                    <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={closeModal} aria-label="Close">
+                        <lightning-icon icon-name="utility:close" alternative-text="Close" size="small"></lightning-icon>
+                    </button>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content">
+                    <template lwc:if={modalLoading}>
+                        <div class="slds-align_absolute-center slds-p-around_large">
+                            <lightning-spinner alternative-text="Loading chart" size="medium"></lightning-spinner>
+                        </div>
+                    </template>
+                    <template lwc:elseif={modalError}>
+                        <div class="slds-notify slds-notify_alert slds-alert_error" role="alert">
+                            <span class="slds-assistive-text">Error</span>
+                            <h2>{modalError}</h2>
+                        </div>
+                    </template>
+                    <template lwc:elseif={hasModalCharts}>
+                        <div class="charts-grid">
+                            <template for:each={modalCharts} for:item="chart">
+                                <div key={chart.id} class="chart-card slds-box slds-theme_shade slds-m-bottom_medium">
+                                    <h3 class="slds-text-heading_small slds-m-bottom_small">{chart.title}</h3>
+                                    <div class="chart-container">
+                                        <canvas data-modal-chart-id={chart.id} role="img" aria-label={chart.title}></canvas>
+                                    </div>
+                                </div>
+                            </template>
+                        </div>
+                    </template>
+                </div>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open" onclick={handleModalBackdrop}></div>
+    </template>
+</template>

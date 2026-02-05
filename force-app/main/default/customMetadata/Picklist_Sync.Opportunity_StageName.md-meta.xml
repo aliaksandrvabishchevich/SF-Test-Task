@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>Opportunity StageName</label>
+    <protected>false</protected>
+    <values>
+        <field>Field_API_Name__c</field>
+        <value xsi:type="xsd:string">StageName</value>
+    </values>
+    <values>
+        <field>Object_API_Name__c</field>
+        <value xsi:type="xsd:string">Opportunity</value>
+    </values>
+    <values>
+        <field>Picklist_JSON__c</field>
+        <value xsi:type="xsd:string">[{&quot;value&quot;:&quot;Prospecting&quot;,&quot;label&quot;:&quot;Prospecting&quot;},{&quot;value&quot;:&quot;Qualification&quot;,&quot;label&quot;:&quot;Qualification&quot;},{&quot;value&quot;:&quot;Needs Analysis&quot;,&quot;label&quot;:&quot;Needs Analysis&quot;},{&quot;value&quot;:&quot;Value Proposition&quot;,&quot;label&quot;:&quot;Value Proposition&quot;},{&quot;value&quot;:&quot;Id. Decision Makers&quot;,&quot;label&quot;:&quot;Id. Decision Makers&quot;},{&quot;value&quot;:&quot;Perception Analysis&quot;,&quot;label&quot;:&quot;Perception Analysis&quot;},{&quot;value&quot;:&quot;Proposal/Price Quote&quot;,&quot;label&quot;:&quot;Proposal/Price Quote&quot;},{&quot;value&quot;:&quot;Negotiation/Review&quot;,&quot;label&quot;:&quot;Negotiation/Review&quot;},{&quot;value&quot;:&quot;Closed Won&quot;,&quot;label&quot;:&quot;Closed Won&quot;},{&quot;value&quot;:&quot;Closed Lost&quot;,&quot;label&quot;:&quot;Closed Lost&quot;}]</value>
+    </values>
+</CustomMetadata>

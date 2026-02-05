@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>65.0</apiVersion>
+    <isExposed>true</isExposed>
+    <targets>
+        <target>lightning__AppPage</target>
+        <target>lightning__RecordPage</target>
+        <target>lightning__HomePage</target>
+        <target>lightning__Tab</target>
+    </targets>
+    <masterLabel>Cross Org Records Viewer</masterLabel>
+    <description>Universal viewer: loads records by SObject API name from external org via Sales_Credentials.</description>
+    <targetConfigs>
+        <targetConfig targets="lightning__AppPage,lightning__RecordPage,lightning__HomePage">
+            <property name="objectApiName" type="String" default="Account" label="SObject API Name" description="API name of the object to load (e.g. Account, Contact, Opportunity)."/>
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

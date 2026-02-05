@@ -1,0 +1,81 @@
+.footer-actions {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    width: 100%;
+}
+
+.external-lookup-wrap {
+    position: relative;
+}
+
+.external-lookup-list {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 100%;
+    z-index: 7000;
+    max-height: 12rem;
+    overflow-y: auto;
+    margin-top: 0.125rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border: 1px solid #dddbda;
+    border-radius: 0.25rem;
+    background: #fff;
+}
+
+.external-lookup-list .external-lookup-option {
+    cursor: pointer;
+    padding: 0.5rem 0.75rem;
+}
+
+.external-lookup-list .external-lookup-option:hover {
+    background-color: #f3f3f3;
+}
+
+.external-lookup-selected-box {
+    border: 1px solid #0176d3;
+    border-radius: 0.25rem;
+    padding: 0 0.5rem 0.5rem;
+    background-color: #f3f9fd;
+}
+
+.external-lookup-selected-box .slds-form-element__label {
+    display: block;
+    padding-top: 0.25rem;
+    margin-bottom: 0.25rem;
+    font-size: 0.75rem;
+    color: #3e3e3c;
+}
+
+.external-lookup-selected-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    min-height: 2rem;
+}
+
+.external-lookup-selected-text {
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 0.8125rem;
+}
+
+.external-lookup-clear {
+    flex-shrink: 0;
+    padding: 0.25rem;
+    border: none;
+    background: transparent;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    color: #706e6b;
+}
+
+.external-lookup-clear:hover {
+    background-color: #e5e5e5;
+    color: #0176d3;
+}

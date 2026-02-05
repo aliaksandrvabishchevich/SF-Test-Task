@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>Account Industry</label>
+    <protected>false</protected>
+    <values>
+        <field>Field_API_Name__c</field>
+        <value xsi:type="xsd:string">Industry</value>
+    </values>
+    <values>
+        <field>Object_API_Name__c</field>
+        <value xsi:type="xsd:string">Account</value>
+    </values>
+    <values>
+        <field>Picklist_JSON__c</field>
+        <value xsi:type="xsd:string">[{&quot;value&quot;:&quot;Agriculture&quot;,&quot;label&quot;:&quot;Agriculture&quot;},{&quot;value&quot;:&quot;Apparel&quot;,&quot;label&quot;:&quot;Apparel&quot;},{&quot;value&quot;:&quot;Banking&quot;,&quot;label&quot;:&quot;Banking&quot;},{&quot;value&quot;:&quot;Biotechnology&quot;,&quot;label&quot;:&quot;Biotechnology&quot;},{&quot;value&quot;:&quot;Chemicals&quot;,&quot;label&quot;:&quot;Chemicals&quot;},{&quot;value&quot;:&quot;Communications&quot;,&quot;label&quot;:&quot;Communications&quot;},{&quot;value&quot;:&quot;Construction&quot;,&quot;label&quot;:&quot;Construction&quot;},{&quot;value&quot;:&quot;Consulting&quot;,&quot;label&quot;:&quot;Consulting&quot;},{&quot;value&quot;:&quot;Education&quot;,&quot;label&quot;:&quot;Education&quot;},{&quot;value&quot;:&quot;Electronics&quot;,&quot;label&quot;:&quot;Electronics&quot;},{&quot;value&quot;:&quot;Energy&quot;,&quot;label&quot;:&quot;Energy&quot;},{&quot;value&quot;:&quot;Engineering&quot;,&quot;label&quot;:&quot;Engineering&quot;},{&quot;value&quot;:&quot;Entertainment&quot;,&quot;label&quot;:&quot;Entertainment&quot;},{&quot;value&quot;:&quot;Environmental&quot;,&quot;label&quot;:&quot;Environmental&quot;},{&quot;value&quot;:&quot;Finance&quot;,&quot;label&quot;:&quot;Finance&quot;},{&quot;value&quot;:&quot;Food &amp; Beverage&quot;,&quot;label&quot;:&quot;Food &amp; Beverage&quot;},{&quot;value&quot;:&quot;Government&quot;,&quot;label&quot;:&quot;Government&quot;},{&quot;value&quot;:&quot;Healthcare&quot;,&quot;label&quot;:&quot;Healthcare&quot;},{&quot;value&quot;:&quot;Hospitality&quot;,&quot;label&quot;:&quot;Hospitality&quot;},{&quot;value&quot;:&quot;Insurance&quot;,&quot;label&quot;:&quot;Insurance&quot;},{&quot;value&quot;:&quot;Machinery&quot;,&quot;label&quot;:&quot;Machinery&quot;},{&quot;value&quot;:&quot;Manufacturing&quot;,&quot;label&quot;:&quot;Manufacturing&quot;},{&quot;value&quot;:&quot;Media&quot;,&quot;label&quot;:&quot;Media&quot;},{&quot;value&quot;:&quot;Not For Profit&quot;,&quot;label&quot;:&quot;Not For Profit&quot;},{&quot;value&quot;:&quot;Recreation&quot;,&quot;label&quot;:&quot;Recreation&quot;},{&quot;value&quot;:&quot;Retail&quot;,&quot;label&quot;:&quot;Retail&quot;},{&quot;value&quot;:&quot;Shipping&quot;,&quot;label&quot;:&quot;Shipping&quot;},{&quot;value&quot;:&quot;Technology&quot;,&quot;label&quot;:&quot;Technology&quot;},{&quot;value&quot;:&quot;Telecommunications&quot;,&quot;label&quot;:&quot;Telecommunications&quot;},{&quot;value&quot;:&quot;Transportation&quot;,&quot;label&quot;:&quot;Transportation&quot;},{&quot;value&quot;:&quot;Utilities&quot;,&quot;label&quot;:&quot;Utilities&quot;},{&quot;value&quot;:&quot;Other&quot;,&quot;label&quot;:&quot;Other&quot;}]</value>
+    </values>
+</CustomMetadata>

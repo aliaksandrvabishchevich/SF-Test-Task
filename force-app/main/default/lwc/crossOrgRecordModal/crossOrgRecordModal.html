@@ -1,0 +1,169 @@
+<template>
+    <lightning-modal-header label={modalTitle} onclose={handleCancel}></lightning-modal-header>
+    <lightning-modal-body>
+        <template lwc:if={errorMessage}>
+            <div class="slds-m-bottom_medium">
+                <div class="slds-notify slds-notify_alert slds-alert_error" role="alert">
+                    <span class="slds-assistive-text">Error</span>
+                    <h2>{errorMessage}</h2>
+                </div>
+            </div>
+        </template>
+        <div class="slds-grid slds-gutters slds-wrap">
+            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                <div class="slds-form slds-form_stacked">
+                    <template for:each={fieldsLeft} for:item="field">
+                        <div key={field.fieldName} class="slds-form-element slds-m-bottom_small">
+                            <div class="slds-form-element__control">
+                                <template lwc:if={field.isExternalLookup}>
+                                    <template lwc:if={field.externalLookupHasSelection}>
+                                        <div class="external-lookup-selected-box">
+                                            <label class="slds-form-element__label" for={field.fieldName}>{field.label}</label>
+                                            <div class="external-lookup-selected-inner">
+                                                <span class="external-lookup-selected-text">{field.externalLookupInputValue}</span>
+                                                <button type="button" class="external-lookup-clear" data-field={field.fieldName} onclick={handleExternalLookupClear} title="Clear and search again" aria-label="Clear selection">
+                                                    <lightning-icon icon-name="utility:close" alternative-text="Clear" size="x-small"></lightning-icon>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </template>
+                                    <template lwc:else>
+                                        <div class="external-lookup-wrap">
+                                            <lightning-input
+                                                label={field.label}
+                                                data-field={field.fieldName}
+                                                type="text"
+                                                required={field.required}
+                                                value={field.externalLookupInputValue}
+                                                placeholder={field.externalLookupPlaceholder}
+                                                icon-name="utility:search"
+                                                icon-position="left"
+                                                icon-alternative-text="Search"
+                                                onchange={handleExternalLookupInput}
+                                                onblur={handleExternalLookupBlur}
+                                            ></lightning-input>
+                                            <template lwc:if={field.externalLookupDropdownOpen}>
+                                                <ul class="slds-listbox slds-listbox_vertical external-lookup-list" role="listbox">
+                                                    <template for:each={field.externalOptions} for:item="opt">
+                                                        <li key={opt.value} role="presentation" class="slds-listbox__item">
+                                                            <div data-field={field.fieldName} data-value={opt.value} data-label={opt.label} class="slds-listbox__option slds-listbox__option_plain slds-media slds-media_small external-lookup-option" role="option" onclick={handleExternalLookupSelect}>
+                                                                <span class="slds-media__body">{opt.label}</span>
+                                                            </div>
+                                                        </li>
+                                                    </template>
+                                                </ul>
+                                            </template>
+                                        </div>
+                                    </template>
+                                </template>
+                                <template lwc:elseif={field.isPicklist}>
+                                    <lightning-combobox
+                                        label={field.label}
+                                        data-field={field.fieldName}
+                                        id={field.fieldName}
+                                        value={field.value}
+                                        options={field.options}
+                                        required={field.required}
+                                        onchange={handleFieldChange}
+                                    ></lightning-combobox>
+                                </template>
+                                <template lwc:else>
+                                    <lightning-input
+                                        label={field.label}
+                                        data-field={field.fieldName}
+                                        id={field.fieldName}
+                                        type={field.inputType}
+                                        value={field.value}
+                                        required={field.required}
+                                        onchange={handleFieldChange}
+                                    ></lightning-input>
+                                </template>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+            </div>
+            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                <div class="slds-form slds-form_stacked">
+                    <template for:each={fieldsRight} for:item="field">
+                        <div key={field.fieldName} class="slds-form-element slds-m-bottom_small">
+                            <div class="slds-form-element__control">
+                                <template lwc:if={field.isExternalLookup}>
+                                    <template lwc:if={field.externalLookupHasSelection}>
+                                        <div class="external-lookup-selected-box">
+                                            <label class="slds-form-element__label" for={field.fieldName}>
+                                                <template lwc:if={field.required}><abbr class="slds-required" title="required">* </abbr></template>{field.label}
+                                            </label>
+                                            <div class="external-lookup-selected-inner">
+                                                <span class="external-lookup-selected-text">{field.externalLookupInputValue}</span>
+                                                <button type="button" class="external-lookup-clear" data-field={field.fieldName} onclick={handleExternalLookupClear} title="Clear and search again" aria-label="Clear selection">
+                                                    <lightning-icon icon-name="utility:close" alternative-text="Clear" size="x-small"></lightning-icon>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </template>
+                                    <template lwc:else>
+                                        <div class="external-lookup-wrap">
+                                            <lightning-input
+                                                label={field.label}
+                                                data-field={field.fieldName}
+                                                type="text"
+                                                required={field.required}
+                                                value={field.externalLookupInputValue}
+                                                placeholder={field.externalLookupPlaceholder}
+                                                icon-name="utility:search"
+                                                icon-position="left"
+                                                icon-alternative-text="Search"
+                                                onchange={handleExternalLookupInput}
+                                                onblur={handleExternalLookupBlur}
+                                            ></lightning-input>
+                                            <template lwc:if={field.externalLookupDropdownOpen}>
+                                                <ul class="slds-listbox slds-listbox_vertical external-lookup-list" role="listbox">
+                                                    <template for:each={field.externalOptions} for:item="opt">
+                                                        <li key={opt.value} role="presentation" class="slds-listbox__item">
+                                                            <div data-field={field.fieldName} data-value={opt.value} data-label={opt.label} class="slds-listbox__option slds-listbox__option_plain slds-media slds-media_small external-lookup-option" role="option" onclick={handleExternalLookupSelect}>
+                                                                <span class="slds-media__body">{opt.label}</span>
+                                                            </div>
+                                                        </li>
+                                                    </template>
+                                                </ul>
+                                            </template>
+                                        </div>
+                                    </template>
+                                </template>
+                                <template lwc:elseif={field.isPicklist}>
+                                    <lightning-combobox
+                                        label={field.label}
+                                        data-field={field.fieldName}
+                                        id={field.fieldName}
+                                        value={field.value}
+                                        options={field.options}
+                                        required={field.required}
+                                        onchange={handleFieldChange}
+                                    ></lightning-combobox>
+                                </template>
+                                <template lwc:else>
+                                    <lightning-input
+                                        label={field.label}
+                                        data-field={field.fieldName}
+                                        id={field.fieldName}
+                                        type={field.inputType}
+                                        value={field.value}
+                                        required={field.required}
+                                        onchange={handleFieldChange}
+                                    ></lightning-input>
+                                </template>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+            </div>
+        </div>
+    </lightning-modal-body>
+    <lightning-modal-footer>
+        <div class="footer-actions">
+            <lightning-button variant="neutral" label="Cancel" onclick={handleCancel}></lightning-button>
+            <lightning-button variant="brand" label="Save" onclick={handleSave} disabled={saveLoading}></lightning-button>
+        </div>
+    </lightning-modal-footer>
+</template>
