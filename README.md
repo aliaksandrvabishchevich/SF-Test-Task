@@ -1,22 +1,70 @@
-# Salesforce DX Project: Next Steps
+# Salesforce DX Project: Cross-Org Records & Dashboard
 
-Now that you’ve created a Salesforce DX project, what’s next? Here are some documentation resources to get you started.
+Salesforce project with Cross-Org Records (view/edit/create/delete records in an external org via REST API) and Dashboard Charts. Configuration is driven by custom metadata.
 
-## Dashboard Charts (Chart.js)
+---
 
-Dashboard Charts LWC uses **Sales_Credential** to call a REST API and Chart.js to render. Add the `dashboardCharts` component to App/Home/Tab. Optional **API Endpoint** property. Replace `staticresources/chartjs.js` with the real [Chart.js UMD](https://cdn.jsdelivr.net/npm/chart.js@4/dist/chart.umd.min.js) for full charts. API response shape: `{ "charts": [ { "id", "type", "title", "labels", "datasets" } ] }`.
+## Project Structure
 
-## How Do You Plan to Deploy Your Changes?
+```
+force-app/main/default/
+├── classes/           # Apex controllers, mocks, tests
+├── lwc/                # Lightning Web Components
+├── objects/            # Custom metadata type definitions
+├── customMetadata/     # Custom metadata records (field lists, picklists)
+└── staticresources/    # Chart.js for dashboard
+```
 
-Do you want to deploy a set of changes, or create a self-contained application? Choose a [development model](https://developer.salesforce.com/tools/vscode/en/user-guide/development-models).
+---
 
-## Configure Your Salesforce DX Project
+## Apex Classes
 
-The `sfdx-project.json` file contains useful configuration information for your project. See [Salesforce DX Project Configuration](https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev/sfdx_dev_ws_config.htm) in the _Salesforce DX Developer Guide_ for details about this file.
+| File | Description |
+|------|-------------|
+| **CrossOrgRecordsController.cls** | Main controller to load, view, create, update , delete records.
+| **CrossOrgRecordsControllerTest.cls** | Unit tests for CrossOrgRecordsController: 
+| **CrossOrgHttpCalloutMock.cls** | HTTP callout mock for CrossOrg controller
+| **DashboardDataController.cls** | Fetches dashboard/list data from Analytics API via. Transforms single-dashboard response to Chart.js format (charts + dashboardTitle) and list response to dashboards array. Falls back to sample JSON on error or empty/invalid response. |
+| **DashboardDataControllerTest.cls** | Unit tests for DashboardDataController: list response, single dashboard, single with factMap rows, HTTP error fallback, callout exception fallback, null/blank endpoint, empty/invalid JSON, root array as dashboard list. |
+| **DashboardHttpCalloutMock.cls** | HTTP callout mock for Dashboard controller. Optional status code, body, and throwInRespond for exception-path tests. |
 
-## Read All About It
+---
 
-- [Salesforce Extensions Documentation](https://developer.salesforce.com/tools/vscode/)
-- [Salesforce CLI Setup Guide](https://developer.salesforce.com/docs/atlas.en-us.sfdx_setup.meta/sfdx_setup/sfdx_setup_intro.htm)
-- [Salesforce DX Developer Guide](https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev/sfdx_dev_intro.htm)
-- [Salesforce CLI Command Reference](https://developer.salesforce.com/docs/atlas.en-us.sfdx_cli_reference.meta/sfdx_cli_reference/cli_reference.htm)
+## Lightning Web Components (LWC)
+
+| Component | Path | Description |
+|-----------|------|-------------|
+| **crossOrgRecordsViewer** | `lwc/crossOrgRecordsViewer/` | Table of records from the external org. Object type and columns from metadata. Supports search, sort, open record in modal (view/edit), delete, and “New” to open create modal.|
+| **crossOrgRecordModal** | `lwc/crossOrgRecordModal/` | Modal for **edit** or **create**. Edit: loads record via `getRecordForEdit`, tracks initial values, and on Save sends **only changed fields** to `updateRecord`. Create: sends all filled fields to `createRecord`. Supports text, date, picklist, and external lookup (search) fields. Validation for required, email, phone. |
+| **dashboardCharts** | `lwc/dashboardCharts/` | Renders dashboard/list from Analytics API. Uses `DashboardDataController.getDashboardChartData` and Chart.js (static resource). Shows dashboard list or chart cards (doughnut/bar) with optional drill-down. |
+
+---
+
+## Custom Metadata Types & Records
+
+### Type Definitions (`objects/`)
+
+| Type | Purpose |
+|------|---------|
+| **Main_Table_Component__mdt** | Table columns per object: `Object_API_Name__c`, `Field_API_Name__c`, `Field_Label__c`, `Field_Type__c`, `Order__c`, `Is_Link__c`, `Is_Sortable__c`. |
+| **Edit_Form_Field_List__mdt** | Edit form fields: `Object_API_Name__c`, `Field_API_Name__c`, `Field_Label__c`, `Field_Type__c`, `Order__c`, `Is_External_Lookup__c`, `Lookup_Object_API_Name__c`. |
+| **New_Record_Field_List__mdt** | New-record form fields: same as edit plus `Is_Mandantory__c`. |
+| **Picklist_Sync__mdt** | Picklist options per object/field: `Object_API_Name__c`, `Field_API_Name__c`, `Picklist_JSON__c` (array of `{value, label}`). |
+
+### Records (`customMetadata/`)
+
+- **Edit_Form_Field_List.*** — Edit form configs for Account, Lead, Opportunity.
+- **Main_Table_Component.*** — Table column configs for Account, Lead, Opportunity.
+- **New_Record_Field_List.*** — New-record form configs for Account, Lead, Opportunity.
+- **Picklist_Sync.*** — Picklist JSON for Industry, Lead Source, Stage, etc.
+- **Sales_Configuration.*** — Optional; deploy only if `Sales_Configuration__mdt` exists in the org.
+
+---
+
+## Static Resources
+
+| Resource | Path | Description |
+|----------|------|-------------|
+| **chartjs** | ChartJS library to display dashboards
+---
+
